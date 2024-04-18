@@ -1,4 +1,6 @@
+import React from "react";
 import "./Product.scss";
+import Card from "./Card/Card";
 
 function Product() {
     return (
@@ -10,6 +12,10 @@ function Product() {
                 <div>
                     <p>항상 신선한 제품만 제공하도록 약속하겠습니다.</p>
                 </div>
+            </div>
+
+            <div>
+                <Card></Card>
             </div>
         </div>
     );
