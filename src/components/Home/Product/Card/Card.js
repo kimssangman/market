@@ -1,26 +1,54 @@
 import React, { useEffect, useState } from "react";
 import "./Card.scss";
-import Product from "../../../../api/product/product_api";
+import Products from "../../../../api/product/product_api"; // Products를 가져옵니다.
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import LazyLoad from "react-lazyload";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 function Card() {
-    const [product, setProduct] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // 이미지 로딩 상태
+    const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [page, setPage] = useState(1); // 페이지 번호를 관리합니다.
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
-        setProduct(Product);
-
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 500);
+        fetchData();
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, []);
+
+    const fetchData = () => {
+        // 서버에서 데이터를 가져오는 비동기 호출을 수행합니다.
+        // 예를 들어, fetch나 axios를 사용하여 서버에 요청을 보냅니다.
+        // 실제로는 서버로부터 데이터를 가져와야 합니다.
+        const newProducts = Products.slice((page - 1) * 10, page * 10);
+        if (newProducts.length === 0) {
+            setHasMore(false);
+        }
+        setProducts((prevProducts) => [...prevProducts, ...newProducts]);
+        setIsLoading(false);
+    };
+
+    const handleScroll = () => {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+        if (
+            windowHeight + scrollTop >= documentHeight - 100 &&
+            hasMore &&
+            !isLoading
+        ) {
+            setPage((prevPage) => prevPage + 1);
+            fetchData();
+        }
+    };
 
     return (
         <div className="card_container">
-            {product.map((product, index) => (
+            {products.map((product, index) => (
                 <LazyLoad key={index} height={200} once>
                     <div className="card" key={index}>
                         {isLoading ? (
@@ -62,6 +90,7 @@ function Card() {
                     </div>
                 </LazyLoad>
             ))}
+            {isLoading && <h4>Loading...</h4>}
         </div>
     );
 }
