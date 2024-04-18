@@ -22,8 +22,8 @@ function Card() {
     const fetchData = () => {
         // 서버에서 데이터를 가져오는 비동기 호출을 수행합니다.
         // 예를 들어, fetch나 axios를 사용하여 서버에 요청을 보냅니다.
-        // 실제로는 서버로부터 데이터를 가져와야 합니다.
-        const newProducts = Products.slice((page - 1) * 10, page * 10);
+        const startIndex = (page - 1) * 5; // 페이지당 5개씩 데이터를 가져오기 위해 시작 인덱스 계산
+        const newProducts = Products.slice(startIndex, startIndex + 5);
         if (newProducts.length === 0) {
             setHasMore(false);
         }
@@ -38,9 +38,14 @@ function Card() {
             window.pageYOffset || document.documentElement.scrollTop;
         if (windowHeight + scrollTop >= documentHeight - 100 && hasMore) {
             setPage((prevPage) => prevPage + 1);
-            fetchData(); // 스크롤 이벤트에서 fetchData 호출 제거
         }
     };
+
+    useEffect(() => {
+        if (!isLoading && page !== 1) {
+            fetchData(); // 페이지가 변경되면 새로운 데이터를 가져옵니다.
+        }
+    }, [page]); // 페이지가 변경될 때만 호출됩니다.
 
     return (
         <div className="card_container">
