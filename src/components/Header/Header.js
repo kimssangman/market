@@ -4,6 +4,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 function Header() {
     return (
@@ -32,6 +33,9 @@ function Header() {
                 </div>
                 <div className="cart">
                     <CiShoppingCart className="cart_img" />
+                </div>
+                <div className="hamburger_menu">
+                    <RxHamburgerMenu className="hamburger_icon" />
                 </div>
             </div>
         </div>

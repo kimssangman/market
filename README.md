@@ -1,10 +1,10 @@
-## `참고 템플릿 사이트`
+## 참고 템플릿 사이트
 
 ```
 https://ko.wix.com/website/templates
 ```
 
-## `init`
+## init
 
 ```
 npx create-react-app my-app

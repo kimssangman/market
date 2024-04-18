@@ -76,3 +76,39 @@
         }
     }
 }
+
+.hamburger_menu {
+    display: none; // 기본적으로 숨김
+}
+
+// 760px 이하에서만 햄버거 아이콘을 표시
+@media (max-width: 760px) {
+    .header {
+        .header_wrap {
+            width: 100%;
+            .nav {
+                display: none; // 네비게이션 링크 숨김
+            }
+
+            .search {
+                display: none; // 검색 창 숨김
+            }
+
+            .auth {
+                display: none; // 로그인 아이콘 숨김
+            }
+
+            .cart {
+                display: none; // 장바구니 아이콘 숨김
+            }
+
+            .hamburger_menu {
+                display: block; // 햄버거 아이콘 표시
+
+                .hamburger_icon {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
