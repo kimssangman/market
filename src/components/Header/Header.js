@@ -1,5 +1,5 @@
+import { useState } from "react";
 import "./Header.scss";
-
 import { CiDeliveryTruck } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
@@ -7,6 +7,12 @@ import { CiShoppingCart } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 
 function Header() {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+
     return (
         <div className="header">
             <div className="header_wrap">
@@ -15,11 +21,12 @@ function Header() {
                     <div>Fresh Marcket</div>
                 </div>
 
-                <div className="nav">
-                    <div>Home</div>
-                    <div>Shop</div>
-                    <div>About</div>
-                    <div>Contact</div>
+                {/* 햄버거 메뉴 */}
+                <div className={`nav ${showMenu ? "show" : ""}`}>
+                    <div className="nav_item">Home</div>
+                    <div className="nav_item">Shop</div>
+                    <div className="nav_item">About</div>
+                    <div className="nav_item">Contact</div>
                 </div>
 
                 <div className="search">
@@ -34,7 +41,7 @@ function Header() {
                 <div className="cart">
                     <CiShoppingCart className="cart_img" />
                 </div>
-                <div className="hamburger_menu">
+                <div className="hamburger_menu" onClick={toggleMenu}>
                     <RxHamburgerMenu className="hamburger_icon" />
                 </div>
             </div>
