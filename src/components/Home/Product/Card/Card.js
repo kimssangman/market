@@ -12,7 +12,7 @@ function Card() {
     const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
-        fetchData();
+        fetchData(); // 처음에 한 번만 호출
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
@@ -36,13 +36,9 @@ function Card() {
         const documentHeight = document.documentElement.scrollHeight;
         const scrollTop =
             window.pageYOffset || document.documentElement.scrollTop;
-        if (
-            windowHeight + scrollTop >= documentHeight - 100 &&
-            hasMore &&
-            !isLoading
-        ) {
+        if (windowHeight + scrollTop >= documentHeight - 100 && hasMore) {
             setPage((prevPage) => prevPage + 1);
-            fetchData();
+            fetchData(); // 스크롤 이벤트에서 fetchData 호출 제거
         }
     };
 
