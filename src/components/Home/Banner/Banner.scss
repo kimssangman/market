@@ -1,0 +1,37 @@
+.banner {
+    width: 1000px;
+    height: 540px;
+    margin: auto;
+    background-size: cover;
+
+    .banner_des {
+        font-size: 3rem;
+        position: relative;
+        top: 160px;
+        left: 100px;
+
+        .banner_text {
+            color: rgb(42, 96, 73);
+            margin: 0;
+        }
+
+        .banner_text_des {
+            font-weight: 200;
+        }
+    }
+
+    .banner_btn {
+        width: 150px;
+        height: 50px;
+        background-color: rgb(106 172 86);
+        border: 0;
+    }
+}
+
+@media (max-width: 760px) {
+    .banner {
+        // width: 100%; /* 화면 너비에 맞추기 위해 100%로 설정 */
+        // max-height: 203px; /* 화면 크기에 맞춰 조절해주세요 */
+        display: none;
+    }
+}

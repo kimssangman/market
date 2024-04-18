@@ -41,3 +41,9 @@
     width: 100%;
     height: calc(100vh - 100px);
 }
+
+@media (max-width: 760px) {
+    .homePage {
+        height: calc(100vh - 80px);
+    }
+}

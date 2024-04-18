@@ -1,6 +1,13 @@
 .homePage {
-    width: 1000px;
-    border: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
     margin: auto;
-    box-sizing: border-box;
+}
+
+@media (max-width: 760px) {
+    .homePage {
+        gap: 10px;
+    }
 }

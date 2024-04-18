@@ -2,6 +2,8 @@
 
 ```
 https://ko.wix.com/website/templates
+
+https://www.wix.com/demone2/online-grocery-store
 ```
 
 ## init
