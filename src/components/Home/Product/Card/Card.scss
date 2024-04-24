@@ -57,3 +57,10 @@
 .btn:hover {
     background-color: #0056b3;
 }
+
+@media (max-width: 760px) {
+    .card_container {
+        display: flex;
+        justify-content: center;
+    }
+}
