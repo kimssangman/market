@@ -27,7 +27,7 @@ const { naver } = window;
 function SignIn() {
     const naverLogin = new naver.LoginWithNaverId({
         clientId: "Gwx_NN3DlWzWz4HO0HxB",
-        callbackUrl: "http://localhost:3000/signIn",
+        callbackUrl: "http://localhost:3000/signIn", // naverLogin.getLoginStatus((status)=> { ...naverLogin.user }) 를 받을 경로
         isPopup: false,
         loginButton: {
             color: "green",
@@ -62,7 +62,7 @@ function SignIn() {
 
                 localStorage.setItem("name", name);
 
-                window.location.href = "http://localhost:3000";
+                window.location.href = "http://localhost:3000"; // 리다이렉트
                 // window.close();
             }
         });

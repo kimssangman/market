@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Header.scss";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
@@ -12,16 +12,55 @@ import { userState } from "../../store/atoms/index";
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
     // const currentUserState = useRecoilValue(userState);
-    const currentUserState = localStorage.getItem("name");
+    const [currentUserState, setCurrentUserState] = useState(null);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        // localStorage에서 현재 사용자 정보 가져오기
+        const user = localStorage.getItem("name");
+        setCurrentUserState(user);
+    }, []);
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
 
-    console.log(currentUserState);
+    /**--------------------------------
+     * 클릭 이벤트 핸들러 추가
+     * 
+     * 어디를 눌러도 dropbox가 닫히게
+     * 
+     * useRef 사용
+     * ref={dropdownRef} 해야 함
+     --------------------------------*/
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setShowMenu(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [dropdownRef]);
+
+    /**--------------------------------
+     * 로그아웃 핸들러
+     --------------------------------*/
+    const handleLogout = () => {
+        // 로그아웃 처리 로직
+        localStorage.removeItem("name");
+        localStorage.removeItem("com.naver.nid.access_token");
+        window.location.reload();
+    };
 
     return (
-        <div className="header">
+        <div className="header" ref={dropdownRef}>
             <div className="header_wrap">
                 <Link to={"/"} style={{ textDecoration: "none" }}>
                     <div className="logo">
@@ -45,16 +84,38 @@ function Header() {
                 </div>
 
                 {/* 로그인 */}
-                {currentUserState !== null ? (
-                    <div>{currentUserState} 님</div>
-                ) : (
-                    <Link to="/signIn" style={{ textDecoration: "none" }}>
-                        <div className="auth">
-                            <CiUser className="auth_img" />
-                            <div className="auth_des">Log In</div>
+                {/* 사용자 정보 및 로그아웃 드롭다운 */}
+                <div className="user_dropdown">
+                    {currentUserState !== null ? (
+                        <div className="user_info" onClick={toggleMenu}>
+                            {currentUserState} 님
                         </div>
-                    </Link>
-                )}
+                    ) : (
+                        <Link to="/signIn" style={{ textDecoration: "none" }}>
+                            <div className="auth">
+                                <CiUser className="auth_img" />
+                                <div className="auth_des">Log In</div>
+                            </div>
+                        </Link>
+                    )}
+                    {showMenu && (
+                        <div className="dropdown_menu">
+                            <Link
+                                to="/myAccount"
+                                className="menu_item"
+                                style={{
+                                    textDecoration: "none",
+                                    color: "black",
+                                }}
+                            >
+                                내 정보
+                            </Link>
+                            <div className="menu_item" onClick={handleLogout}>
+                                로그아웃
+                            </div>
+                        </div>
+                    )}
+                </div>
 
                 {/* 장바구니 */}
                 <div className="cart">

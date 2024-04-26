@@ -35,7 +35,6 @@ function Card() {
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
 
-        console.log(isLoading);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
@@ -63,53 +62,42 @@ function Card() {
 
     return (
         <div className="card_container">
-            {products.map((product, index) => (
-                <LazyLoad key={index} height={200} once>
-                    <div className="card" key={index}>
-                        {isLoading ? (
-                            <Skeleton width={210} height={210}></Skeleton>
-                        ) : (
-                            <img
-                                className="card_image"
-                                src={product.image}
-                                alt={product.name}
-                            />
-                        )}
-
-                        <div className="card_body">
-                            {isLoading ? (
-                                <Skeleton></Skeleton>
-                            ) : (
-                                <h5 className="card_title">{product.name}</h5>
-                            )}
-                            {isLoading ? (
-                                <Skeleton></Skeleton>
-                            ) : (
-                                <p className="card_text">
-                                    {product.description}
-                                </p>
-                            )}
-                            {isLoading ? (
-                                <Skeleton></Skeleton>
-                            ) : (
-                                <p className="card_price">${product.price}</p>
-                            )}
-                            {isLoading ? (
-                                <Skeleton></Skeleton>
-                            ) : (
-                                <button className="btn btn_primary">
-                                    Add to Cart
-                                </button>
-                            )}
-                        </div>
-                    </div>
-                </LazyLoad>
-            ))}
-            {!hasMore ? (
-                <h4 className="no_more">더이상 상품이 없습니다.</h4>
-            ) : (
-                <></>
-            )}
+            {isLoading
+                ? // 데이터가 로딩 중인 경우 Skeleton UI 표시
+                  Array.from({ length: 5 }).map((_, index) => (
+                      <div className="card" key={index}>
+                          <Skeleton width={210} height={210} />
+                          <div className="card_body">
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton />
+                              <Skeleton />
+                          </div>
+                      </div>
+                  ))
+                : // 데이터가 로딩되면 실제 카드 아이템 표시
+                  products.map((product, index) => (
+                      <LazyLoad key={index} height={200} once>
+                          <div className="card" key={index}>
+                              <img
+                                  className="card_image"
+                                  src={product.image}
+                                  alt={product.name}
+                              />
+                              <div className="card_body">
+                                  <h5 className="card_title">{product.name}</h5>
+                                  <p className="card_text">
+                                      {product.description}
+                                  </p>
+                                  <p className="card_price">${product.price}</p>
+                                  <button className="btn btn_primary">
+                                      Add to Cart
+                                  </button>
+                              </div>
+                          </div>
+                      </LazyLoad>
+                  ))}
+            {!hasMore && <h4 className="no_more">더 이상 상품이 없습니다.</h4>}
         </div>
     );
 }

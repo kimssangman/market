@@ -73,6 +73,22 @@
             }
         }
 
+        .user_dropdown {
+            cursor: pointer;
+        }
+
+        .dropdown_menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: absolute;
+            border: solid 1px rgb(226, 226, 226);
+            padding: 20px;
+            z-index: 1;
+            background-color: white;
+            border-radius: 10%;
+        }
+
         .cart {
             .cart_img {
                 display: flex;
