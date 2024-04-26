@@ -6,13 +6,19 @@ import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../store/atoms/index";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
+    // const currentUserState = useRecoilValue(userState);
+    const currentUserState = localStorage.getItem("name");
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
+
+    console.log(currentUserState);
 
     return (
         <div className="header">
@@ -39,12 +45,16 @@ function Header() {
                 </div>
 
                 {/* 로그인 */}
-                <Link to="/signIn" style={{ textDecoration: "none" }}>
-                    <div className="auth">
-                        <CiUser className="auth_img" />
-                        <div className="auth_des">Log In</div>
-                    </div>
-                </Link>
+                {currentUserState !== null ? (
+                    <div>{currentUserState} 님</div>
+                ) : (
+                    <Link to="/signIn" style={{ textDecoration: "none" }}>
+                        <div className="auth">
+                            <CiUser className="auth_img" />
+                            <div className="auth_des">Log In</div>
+                        </div>
+                    </Link>
+                )}
 
                 {/* 장바구니 */}
                 <div className="cart">
