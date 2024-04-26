@@ -17,10 +17,12 @@ function Header() {
     return (
         <div className="header">
             <div className="header_wrap">
-                <div className="logo">
-                    <CiDeliveryTruck className="logo_img" />
-                    <div>Fresh Marcket</div>
-                </div>
+                <Link to={"/"} style={{ textDecoration: "none" }}>
+                    <div className="logo">
+                        <CiDeliveryTruck className="logo_img" />
+                        <div>Fresh Marcket</div>
+                    </div>
+                </Link>
 
                 {/* 햄버거 메뉴 */}
                 <div className={`nav ${showMenu ? "show" : ""}`}>

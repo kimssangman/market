@@ -1,0 +1,101 @@
+.login_container {
+    width: 1000px;
+    min-height: 500px;
+    margin: 0 auto;
+    margin-top: 80px;
+
+    .login_wrap {
+        width: 100%;
+        height: 100%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-size: 1.5rem;
+        width: 100%;
+        height: 30px;
+        margin: 30px 0 !important;
+    }
+
+    .login_util {
+        width: 400px;
+        height: 230px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        gap: 20px;
+        border: 1px solid rgb(226, 226, 226);
+
+        .login_until_title {
+            font-size: 1.2rem;
+        }
+
+        .login_until_dec {
+            font-size: 0.9rem;
+            color: #8a8a8a;
+        }
+
+        .login_until_btn {
+            width: 150px;
+            height: 54px;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgb(226, 226, 226);
+            color: #1a1a1a;
+            box-sizing: border-box;
+        }
+    }
+
+    .login_sns {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        margin-top: 30px;
+        gap: 20px;
+
+        .login_sns_title {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .login_sns_dec {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+
+            .login_sns_btn {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: calc(50% - 4px);
+                height: 56px;
+                padding: 0 24px;
+                margin: 0 0 8px 0 !important;
+                font-size: 14px;
+                font-weight: 400;
+                color: #1a1a1a;
+                background-color: #fff;
+                text-align: right;
+                border: 1px solid #e3e3e3;
+                box-sizing: border-box;
+                line-height: 56px;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
