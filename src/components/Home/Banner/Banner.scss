@@ -3,29 +3,56 @@
     height: 540px;
     margin: auto;
     background-size: cover;
+}
 
-    .banner_des {
-        font-size: 3rem;
-        position: relative;
-        top: 160px;
-        left: 100px;
+.banner_image {
+    opacity: 0.5;
+    transition: 0.5s ease-in-out;
+}
 
-        .banner_text {
-            color: rgb(42, 96, 73);
-            margin: 0;
-        }
+.banner_des {
+    font-size: 3rem;
+    position: relative;
+    bottom: 400px;
+    left: 100px;
+}
 
-        .banner_text_des {
-            font-weight: 200;
-        }
-    }
+.banner_text {
+    color: rgb(42, 96, 73);
+    margin: 0;
+}
 
-    .banner_btn {
-        width: 150px;
-        height: 50px;
-        background-color: rgb(106 172 86);
-        border: 0;
-    }
+.banner_text_des {
+    font-weight: 200;
+}
+
+.banner_btn {
+    width: 150px;
+    height: 50px;
+    background-color: rgb(106 172 86);
+    border: 0;
+}
+
+.banner_footer_wrap {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 340px;
+    display: flex;
+    gap: 10px;
+}
+
+.banner_footer_btn {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    opacity: 0.5; /* 기본적으로 투명도를 설정 */
+}
+
+.banner_footer_btn.active {
+    opacity: 1; /* 현재 이미지에 해당하는 버튼은 투명도를 1로 설정 */
+    background-color: rgb(106 172 86);
 }
 
 @media (max-width: 760px) {

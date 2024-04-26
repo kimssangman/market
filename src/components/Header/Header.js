@@ -5,6 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
@@ -29,15 +30,21 @@ function Header() {
                     <div className="nav_item">Contact</div>
                 </div>
 
+                {/* 검색 */}
                 <div className="search">
                     <input type="text" />
                     <CiSearch className="search_img" />
                 </div>
 
-                <div className="auth">
-                    <CiUser className="auth_img" />
-                    <div className="auth_des">Log In</div>
-                </div>
+                {/* 로그인 */}
+                <Link to="/signIn" style={{ textDecoration: "none" }}>
+                    <div className="auth">
+                        <CiUser className="auth_img" />
+                        <div className="auth_des">Log In</div>
+                    </div>
+                </Link>
+
+                {/* 장바구니 */}
                 <div className="cart">
                     <CiShoppingCart className="cart_img" />
                 </div>

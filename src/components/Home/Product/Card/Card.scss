@@ -1,10 +1,11 @@
 .card_container {
     display: flex;
     // justify-content: space-between;
-    gap: 10px 15px;
+    gap: 10px 34px;
     flex-wrap: wrap;
     padding: 5px 25px 5px 25px;
 }
+
 .card {
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -58,9 +59,25 @@
     background-color: #0056b3;
 }
 
+.no_more {
+    width: 210px;
+    height: 210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media (max-width: 760px) {
     .card_container {
         display: flex;
         justify-content: center;
+    }
+
+    .no_more {
+        width: 210px;
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }

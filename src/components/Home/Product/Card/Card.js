@@ -34,6 +34,8 @@ function Card() {
      -----------------------------*/
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
+
+        console.log(isLoading);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
@@ -103,7 +105,11 @@ function Card() {
                     </div>
                 </LazyLoad>
             ))}
-            {!hasMore ? <h4>더이상 상품이 없습니다.</h4> : <></>}
+            {!hasMore ? (
+                <h4 className="no_more">더이상 상품이 없습니다.</h4>
+            ) : (
+                <></>
+            )}
         </div>
     );
 }
