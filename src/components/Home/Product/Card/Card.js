@@ -89,7 +89,9 @@ function Card() {
                                   <p className="card_text">
                                       {product.description}
                                   </p>
-                                  <p className="card_price">${product.price}</p>
+                                  <p className="card_price">
+                                      {product.price} 원
+                                  </p>
                                   <button className="btn btn_primary">
                                       Add to Cart
                                   </button>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SignIn.scss";
 import useSimpleSignIn from "../../../api/signIn/simple_signIn_api";
+import { Link } from "react-router-dom";
 
 function SignIn() {
     // 간편 로그인 훅 분리
@@ -49,7 +50,9 @@ function SignIn() {
                         지금 회원가입 하시면 <br /> 30% 할인쿠폰과 <br />
                         적립금 3천원이 자동 지급됩니다.
                     </div>
-                    <div className="login_until_btn">회원가입</div>
+                    <Link to={"/signUp"} style={{ textDecoration: "none" }}>
+                        <div className="login_until_btn">회원가입</div>
+                    </Link>
                 </div>
 
                 {/* 간편 로그인 */}
@@ -100,7 +103,7 @@ function SignIn() {
                                     <div>아이디 저장</div>
                                 </div>
                                 <div className="security_sec">
-                                    <input type="checkbox" checked="true" />
+                                    <input type="checkbox" checked={true} />
                                     <div>보안 접속</div>
                                 </div>
                             </div>

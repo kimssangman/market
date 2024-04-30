@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import { RecoilRoot } from "recoil";
 import NotFound from "./components/NotFound/NotFound";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
 
 function App() {
     return (
@@ -21,6 +22,10 @@ function App() {
                     <Route
                         path="/signIn"
                         element={<SignInPage className="signIn" />}
+                    />
+                    <Route
+                        path="/signUp"
+                        element={<SignUpPage className="signIn" />}
                     />
                     <Route path="*" element={<NotFound />} replace={true} />
                 </Routes>

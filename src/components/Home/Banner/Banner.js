@@ -49,18 +49,16 @@ function Banner() {
                         className="banner_image"
                     />
                     <div className="banner_des">
-                        <p className="banner_text ">
-                            <strong>FRESH MARKET</strong>
+                        <p className="banner_text banner_title">
+                            <strong>신선마켓</strong>
                         </p>
+                        <p className="banner_text banner_text_des">필요한</p>
+                        <p className="banner_text banner_text_des">모든 것을</p>
                         <p className="banner_text banner_text_des">
-                            We'll Deliver
+                            제공합니다
                         </p>
-                        <p className="banner_text banner_text_des">
-                            Everything
-                        </p>
-                        <p className="banner_text banner_text_des">You Need</p>
 
-                        <button className="banner_btn">SHOP ONLINE</button>
+                        <button className="banner_btn">특가세일</button>
                     </div>
 
                     <div className="banner_footer_wrap">

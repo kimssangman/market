@@ -65,16 +65,16 @@ function Header() {
                 <Link to={"/"} style={{ textDecoration: "none" }}>
                     <div className="logo">
                         <CiDeliveryTruck className="logo_img" />
-                        <div>Fresh Marcket</div>
+                        <div>신선마켓</div>
                     </div>
                 </Link>
 
                 {/* 햄버거 메뉴 */}
                 <div className={`nav ${showMenu ? "show" : ""}`}>
-                    <div className="nav_item">Home</div>
-                    <div className="nav_item">Shop</div>
-                    <div className="nav_item">About</div>
-                    <div className="nav_item">Contact</div>
+                    <div className="nav_item">NEW</div>
+                    <div className="nav_item">BEST</div>
+                    <div className="nav_item">SALE</div>
+                    <div className="nav_item">EVENT</div>
                 </div>
 
                 {/* 검색 */}
@@ -94,7 +94,7 @@ function Header() {
                         <Link to="/signIn" style={{ textDecoration: "none" }}>
                             <div className="auth">
                                 <CiUser className="auth_img" />
-                                <div className="auth_des">Log In</div>
+                                <div className="auth_des">로그인</div>
                             </div>
                         </Link>
                     )}

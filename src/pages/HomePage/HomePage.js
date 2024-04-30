@@ -12,7 +12,7 @@ function HomePage() {
 
     useEffect(() => {
         // 홈페이지의 타이틀 설정
-        document.title = "식자재 마켓";
+        document.title = "신선마켓";
     }, [location]);
     /**---------------------------------- */
 
