@@ -4,6 +4,11 @@
 https://ko.wix.com/website/templates
 
 https://www.wix.com/demone2/online-grocery-store
+
+https://d.cafe24.com/sample?productCode=PTMD778258&frame=P
+
+리액트 이미지 확대 기능
+https://velog.io/@eenaree/react-image-zoom-in
 ```
 
 ## init
