@@ -19,7 +19,7 @@
             text-align: center;
             font-size: 1.5rem;
             width: 100%;
-            height: 30px;
+            height: 40px;
             margin: 30px 0 !important;
         }
 
@@ -27,6 +27,7 @@
             width: 720px;
             border-top: 2px solid #1a1a1a;
 
+            // 아이디
             .id_container {
                 display: flex;
                 width: 100%;
@@ -54,8 +55,9 @@
 
                     input {
                         width: 80%;
-                        height: 30px;
+                        height: 40px;
                         border: 1px solid #e0e0e0;
+                        padding-left: 15px;
                     }
 
                     .des {
@@ -64,6 +66,7 @@
                 }
             }
 
+            // 비밀번호
             .pw_container {
                 display: flex;
                 width: 100%;
@@ -90,8 +93,169 @@
 
                     input {
                         width: 80%;
-                        height: 30px;
+                        height: 40px;
                         border: 1px solid #e0e0e0;
+                        padding-left: 15px;
+                    }
+
+                    .des {
+                        margin-top: 10px;
+                    }
+                }
+            }
+
+            // 비밀번호 확인
+            .pw_confirm_container {
+                display: flex;
+                width: 100%;
+                border-bottom: 1px solid #e5e5e5;
+                height: 95px;
+
+                .pw_confirm {
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    padding: 0px 20px;
+                    background-color: #f6f6f6;
+                    color: #636262;
+                }
+
+                .pw_confirm_input {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: 0 15px;
+                    color: #868686;
+                    font-size: 14px;
+
+                    input {
+                        width: 80%;
+                        height: 40px;
+                        border: 1px solid #e0e0e0;
+                        padding-left: 15px;
+                    }
+
+                    .des {
+                        margin-top: 10px;
+                    }
+
+                    .pw_des {
+                        color: #fb3131;
+                    }
+                }
+            }
+
+            // 이름
+            .name_container {
+                display: flex;
+                width: 100%;
+                border-bottom: 1px solid #e5e5e5;
+                height: 95px;
+
+                .name {
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    padding: 0px 20px;
+                    background-color: #f6f6f6;
+                    color: #636262;
+                }
+
+                .name_input {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: 0 15px;
+                    color: #868686;
+                    font-size: 14px;
+
+                    input {
+                        width: 80%;
+                        height: 40px;
+                        border: 1px solid #e0e0e0;
+                        padding-left: 15px;
+                    }
+
+                    .des {
+                        margin-top: 10px;
+                    }
+                }
+            }
+
+            // 휴대전화
+            .phone_container {
+                display: flex;
+                width: 100%;
+                border-bottom: 1px solid #e5e5e5;
+                height: 95px;
+
+                .phone {
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    padding: 0px 20px;
+                    background-color: #f6f6f6;
+                    color: #636262;
+                }
+
+                .phone_input {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: 0 15px;
+                    color: #868686;
+                    font-size: 14px;
+
+                    input {
+                        width: 80%;
+                        height: 40px;
+                        border: 1px solid #e0e0e0;
+                        padding-left: 15px;
+                    }
+
+                    .des {
+                        margin-top: 10px;
+                    }
+
+                    .phone_des {
+                        color: #fb3131;
+                    }
+                }
+            }
+
+            // 이메일
+            .email_container {
+                display: flex;
+                width: 100%;
+                border-bottom: 1px solid #e5e5e5;
+                height: 95px;
+
+                .email {
+                    width: 30%;
+                    display: flex;
+                    align-items: center;
+                    padding: 0px 20px;
+                    background-color: #f6f6f6;
+                    color: #636262;
+                }
+
+                .email_input {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding: 0 15px;
+                    color: #868686;
+                    font-size: 14px;
+
+                    input {
+                        width: 80%;
+                        height: 40px;
+                        border: 1px solid #e0e0e0;
+                        padding-left: 15px;
                     }
 
                     .des {

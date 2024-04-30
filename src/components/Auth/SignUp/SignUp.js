@@ -78,25 +78,25 @@ function SignUp() {
                         </div>
 
                         {/* 비밀번호 확인 */}
-                        <div className="pw_container">
-                            <div className="pw">비밀번호 확인</div>
-                            <div className="pw_input">
+                        <div className="pw_confirm_container">
+                            <div className="pw_confirm">비밀번호 확인</div>
+                            <div className="pw_confirm_input">
                                 <input
                                     id="password"
                                     type="password"
                                     name="password"
                                     onChange={handleChange}
                                 />
-                                <div className="des">
+                                <div className="des pw_des">
                                     비밀번호가 일치하지 않습니다.
                                 </div>
                             </div>
                         </div>
 
                         {/* 이름 */}
-                        <div className="pw_container">
-                            <div className="pw">이름</div>
-                            <div className="pw_input">
+                        <div className="name_container">
+                            <div className="name">이름</div>
+                            <div className="name_input">
                                 <input
                                     id="name"
                                     type="text"
@@ -107,25 +107,25 @@ function SignUp() {
                         </div>
 
                         {/* 휴대전화 */}
-                        <div className="pw_container">
-                            <div className="pw">휴대전화</div>
-                            <div className="pw_input">
+                        <div className="phone_container">
+                            <div className="phone">휴대전화</div>
+                            <div className="phone_input">
                                 <input
                                     id="phone"
                                     type="name"
                                     name="phone"
                                     onChange={handleChange}
                                 />
-                                <div className="des">
+                                <div className="des phone_des">
                                     휴대폰 번호를 입력하세요.
                                 </div>
                             </div>
                         </div>
 
                         {/* 이메일 */}
-                        <div className="pw_container">
-                            <div className="pw">이메일</div>
-                            <div className="pw_input">
+                        <div className="email_container">
+                            <div className="email">이메일</div>
+                            <div className="email_input">
                                 <input
                                     id="email"
                                     type="email"
