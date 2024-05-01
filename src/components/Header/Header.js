@@ -8,17 +8,24 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../store/atoms/index";
+import { DecodingInfo } from "../../api/auth/jwt_api";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
-    // const currentUserState = useRecoilValue(userState);
-    const [currentUserState, setCurrentUserState] = useState(null);
+    const currentUserState = useRecoilValue(userState);
+    const [userName, setUserName] = useState(null); // 사용자 이름 상태 추가
     const dropdownRef = useRef(null);
 
+    /**-------------------------------
+     * JWT에서 사용자 정보 가져오기
+     -------------------------------*/
     useEffect(() => {
-        // localStorage에서 현재 사용자 정보 가져오기
-        const user = localStorage.getItem("name");
-        setCurrentUserState(user);
+        const token = localStorage.getItem("token");
+        const decodedToken = DecodingInfo(token);
+
+        if (decodedToken && decodedToken.name) {
+            setUserName(decodedToken.name); // 디코딩된 토큰에서 사용자 이름 설정
+        }
     }, []);
 
     const toggleMenu = () => {
@@ -57,6 +64,7 @@ function Header() {
         localStorage.removeItem("name");
         localStorage.removeItem("com.naver.nid.access_token");
         window.location.reload();
+        localStorage.removeItem("token");
     };
 
     return (
@@ -86,9 +94,9 @@ function Header() {
                 {/* 로그인 */}
                 {/* 사용자 정보 및 로그아웃 드롭다운 */}
                 <div className="user_dropdown">
-                    {currentUserState !== null ? (
+                    {userName ? ( // 사용자 이름이 있으면 표시
                         <div className="user_info" onClick={toggleMenu}>
-                            {currentUserState} 님
+                            {userName} 님
                         </div>
                     ) : (
                         <Link to="/signIn" style={{ textDecoration: "none" }}>

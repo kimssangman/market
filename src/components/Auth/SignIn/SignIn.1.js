@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import "./SignIn.scss";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../../api/auth/signIn_api";
 import useSimpleSignIn from "../../../api/auth/simple_signIn_api";
 import { userState } from "../../../store/atoms";
 import { useRecoilState } from "recoil";
 
-function SignIn() {
+export function SignIn() {
     const navigate = useNavigate();
     const [user, setUser] = useRecoilState(userState);
 
@@ -35,14 +34,8 @@ function SignIn() {
         try {
             // axios를 사용하여 서버로 데이터를 보냅니다.
             const response = await signIn(form).then((res) => {
-                /**-------------------------------
-                 * JWT에서 사용자 정보 전역변수에 저장
-                 * 라우팅을 저렇게해서 전역변수 작동 안 함
-                 * 수정해야 함
-                 -------------------------------*/
                 setUser(res.payload.name);
-                // navigate("/");
-                window.location.href = "http://localhost:3000";
+                navigate("/");
             });
             // localStorage.setItem("name", response.data.name);
         } catch (error) {
@@ -134,5 +127,3 @@ function SignIn() {
         </div>
     );
 }
-
-export default SignIn;

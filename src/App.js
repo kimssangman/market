@@ -8,8 +8,13 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import { RecoilRoot } from "recoil";
 import NotFound from "./components/NotFound/NotFound";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import PrivateRoute from "./pages/PrivateRoute";
+import { getToken } from "./api/auth/jwt_api";
+import IsTokenRoute from "./pages/IsTokenRoute";
 
 function App() {
+    const token = getToken();
+
     return (
         <div className="App">
             <RecoilRoot>
@@ -21,11 +26,21 @@ function App() {
                     />
                     <Route
                         path="/signIn"
-                        element={<SignInPage className="signIn" />}
+                        element={
+                            <IsTokenRoute
+                                component={<SignInPage className="signIn" />}
+                                authenticated={token}
+                            />
+                        }
                     />
                     <Route
                         path="/signUp"
-                        element={<SignUpPage className="signIn" />}
+                        element={
+                            <IsTokenRoute
+                                component={<SignUpPage className="signIn" />}
+                                authenticated={token}
+                            />
+                        }
                     />
                     <Route path="*" element={<NotFound />} replace={true} />
                 </Routes>
