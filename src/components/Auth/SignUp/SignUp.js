@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import "./SignUp.scss";
+import { signUp } from "../../../api/auth/signUp_api";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         id: "",
         password: "",
+        pw_confirm: "",
         name: "",
-        phone: "",
-        email: "",
     });
 
     // 입력값이 변경될 때 실행되는 함수
@@ -24,11 +27,20 @@ function SignUp() {
     const handleSignUp = async (e) => {
         e.preventDefault();
 
+        if (form.password !== form.pw_confirm) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
         try {
-            console.log(form);
-            // axios를 사용하여 서버로 데이터를 보냅니다.
-            // const response = await signUp(form);
-            // console.log(response.message);
+            const response = await signUp(form);
+
+            if (response.message === "duplicated") {
+                alert("중복된 아이디입니다.");
+            } else {
+                alert("회원가입이 완료되었습니다.");
+                navigate("/");
+            }
         } catch (error) {
             console.error("회원가입 실패:", error);
         }
@@ -37,12 +49,10 @@ function SignUp() {
     return (
         <div className="signup_container">
             <div className="signup_wrap">
-                {/* 제목 */}
                 <div className="title">회원가입</div>
 
                 <form onSubmit={handleSignUp}>
                     <div className="form_container">
-                        {/* 아이디 */}
                         <div className="id_container">
                             <div className="id">아이디</div>
                             <div className="id_input">
@@ -59,7 +69,6 @@ function SignUp() {
                             </div>
                         </div>
 
-                        {/* 비밀번호 */}
                         <div className="pw_container">
                             <div className="pw">비밀번호</div>
                             <div className="pw_input">
@@ -77,23 +86,24 @@ function SignUp() {
                             </div>
                         </div>
 
-                        {/* 비밀번호 확인 */}
                         <div className="pw_confirm_container">
                             <div className="pw_confirm">비밀번호 확인</div>
                             <div className="pw_confirm_input">
                                 <input
-                                    id="password"
+                                    id="pw_confirm"
                                     type="password"
-                                    name="password"
+                                    name="pw_confirm"
+                                    value={form.pw_confirm}
                                     onChange={handleChange}
                                 />
-                                <div className="des pw_des">
-                                    비밀번호가 일치하지 않습니다.
-                                </div>
+                                {form.password !== form.pw_confirm && (
+                                    <div className="des pw_des">
+                                        비밀번호가 일치하지 않습니다.
+                                    </div>
+                                )}
                             </div>
                         </div>
 
-                        {/* 이름 */}
                         <div className="name_container">
                             <div className="name">이름</div>
                             <div className="name_input">
@@ -105,39 +115,24 @@ function SignUp() {
                                 />
                             </div>
                         </div>
-
-                        {/* 휴대전화 */}
-                        <div className="phone_container">
-                            <div className="phone">휴대전화</div>
-                            <div className="phone_input">
-                                <input
-                                    id="phone"
-                                    type="name"
-                                    name="phone"
-                                    onChange={handleChange}
-                                />
-                                <div className="des phone_des">
-                                    휴대폰 번호를 입력하세요.
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* 이메일 */}
-                        <div className="email_container">
-                            <div className="email">이메일</div>
-                            <div className="email_input">
-                                <input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
                     </div>
 
                     <div className="form_btn">
-                        <button className="form_cancel">취소</button>
+                        <Link
+                            to={"/"}
+                            style={{
+                                textDecoration: "none",
+                                color: "black",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                fontSize: 16,
+                            }}
+                            className="form_cancel"
+                        >
+                            취소
+                        </Link>
+
                         <button className="form_submit">가입하기</button>
                     </div>
                 </form>
