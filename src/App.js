@@ -8,9 +8,10 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import { RecoilRoot } from "recoil";
 import NotFound from "./components/NotFound/NotFound";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
-import PrivateRoute from "./pages/PrivateRoute";
+
 import { getToken } from "./api/auth/jwt_api";
-import IsTokenRoute from "./pages/IsTokenRoute";
+import IsTokenRoute from "./pages/IsTokenRoute"; // 토큰이 존재하면 라우팅
+import PrivateRoute from "./pages/PrivateRoute"; // 토큰이 존재하지 않으면 라우팅
 
 function App() {
     const token = getToken();
