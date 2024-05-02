@@ -19,3 +19,16 @@ export function DecodingInfo(jwtToken) {
 export function getToken() {
     return localStorage.getItem("token");
 }
+
+// 토큰 만료 감지
+export function isExpired(token) {
+    if (!token) {
+        return false; // 토큰이 없을 때 null 반환
+    }
+
+    const expiration = new Date(token * 1000); // 토큰의 만료 시간을 초 단위로 변환하여 가져옵니다.
+    const now = new Date();
+
+    // 만료 시간과 현재 시간을 비교하여 만료 여부를 확인합니다.
+    return expiration <= now;
+}

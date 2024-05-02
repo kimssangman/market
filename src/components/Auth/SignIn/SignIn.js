@@ -46,6 +46,7 @@ function SignIn() {
             });
             // localStorage.setItem("name", response.data.name);
         } catch (error) {
+            alert("아이디 또는 비밀번호 오류");
             console.error("로그인 실패:", error);
         }
     };

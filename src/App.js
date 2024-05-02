@@ -12,6 +12,7 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import { getToken } from "./api/auth/jwt_api";
 import IsTokenRoute from "./pages/IsTokenRoute"; // 토큰이 존재하면 라우팅
 import PrivateRoute from "./pages/PrivateRoute"; // 토큰이 존재하지 않으면 라우팅
+import Footer from "./components/Footer/Footer";
 
 function App() {
     const token = getToken();
@@ -45,6 +46,7 @@ function App() {
                     />
                     <Route path="*" element={<NotFound />} replace={true} />
                 </Routes>
+                <Footer />
             </RecoilRoot>
         </div>
     );

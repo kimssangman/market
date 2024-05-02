@@ -8,7 +8,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../store/atoms/index";
-import { DecodingInfo } from "../../api/auth/jwt_api";
+import { DecodingInfo, isExpired } from "../../api/auth/jwt_api";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
@@ -23,8 +23,20 @@ function Header() {
         const token = localStorage.getItem("token");
         const decodedToken = DecodingInfo(token);
 
+        /**-------------------------------
+        * JWT에서 토큰 만료됐는지 확인
+        -------------------------------*/
+        const token_isExpired = isExpired(decodedToken?.exp);
+        if (token_isExpired) {
+            alert("로그인 토큰 만료!");
+            localStorage.removeItem("token");
+            window.location.href = "http://localhost:3000"; // 리다이렉트
+        }
+
         if (decodedToken && decodedToken.name) {
             setUserName(decodedToken.name); // 디코딩된 토큰에서 사용자 이름 설정
+        } else {
+            setUserName("");
         }
     }, []);
 
