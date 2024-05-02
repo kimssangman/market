@@ -1,58 +1,31 @@
-const Product = [
-    {
-        name: "Apple",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product1.jpg",
-    },
-    {
-        name: "Egg",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product2.jpg",
-    },
-    {
-        name: "Tissue",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product3.jpg",
-    },
-    {
-        name: "Tomato",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product4.jpg",
-    },
-    {
-        name: "Cheeze",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product5.jpg",
-    },
-    {
-        name: "Detergent",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product6.jpg",
-    },
-    {
-        name: "Potato",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product7.jpg",
-    },
-    {
-        name: "Milk",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product8.jpg",
-    },
-    {
-        name: "Banana",
-        description: "Product Description",
-        price: 10.99,
-        image: "/images/product9.jpg",
-    },
-];
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export default Product;
+function useData(url, _id) {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(url, { params: { _id } });
+                setData(response.data);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+
+        return () => {
+            // Cleanup if needed
+        };
+    }, [url]);
+
+    return { data, loading, error };
+}
+
+export default useData;

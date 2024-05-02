@@ -47,7 +47,7 @@ function App() {
                     />
 
                     <Route
-                        path="/product/:id"
+                        path="/product/:_id"
                         element={
                             <ProductDetailPage className="productDetailPage" />
                         }
