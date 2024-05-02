@@ -62,9 +62,8 @@ function Card() {
 
     return (
         <div className="card_container">
-            {isLoading
-                ? // 데이터가 로딩 중인 경우 Skeleton UI 표시
-                  Array.from({ length: 5 }).map((_, index) => (
+            {isLoading || !products.length // isLoading이 true이거나 products가 없는 경우 Skeleton UI 표시
+                ? Array.from({ length: 5 }).map((_, index) => (
                       <div className="card" key={index}>
                           <Skeleton width={210} height={210} />
                           <div className="card_body">
