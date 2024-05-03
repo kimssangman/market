@@ -103,7 +103,7 @@ function ProductDetail() {
                         <ZoomView
                             position={viewPosition}
                             img={data?.image}
-                            left={imageRect.width + 20}
+                            left={imageRect.width}
                         />
                     )}
                 </div>
