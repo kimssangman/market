@@ -37,38 +37,72 @@ function ProductDetail() {
                     />
                 </div>
                 <div className="productDetail_right">
-                    <div>
-                        <div>
-                            <span>이름</span>
+                    <div className="productDetail_dec_wrap">
+                        <div className="productDetail_dec_title">
+                            <span>{data?.name}</span>
                         </div>
-                        <div>
-                            <div>
-                                <span>판매가</span>
-                                <span>판매가</span>
+                        <div className="productDetail_dec_contents">
+                            <div className="productDetail_dec_content">
+                                <div className="productDetail_dec_content_left">
+                                    <strong>
+                                        <span>판매가</span>
+                                    </strong>
+                                </div>
+                                <div className="productDetail_dec_content_right">
+                                    <strong>
+                                        <span>{data?.price} 원</span>
+                                    </strong>
+                                </div>
                             </div>
-                            <div>
-                                <span>배송방법</span>
-                                <span>택배</span>
+                            <div className="productDetail_dec_content">
+                                <div className="productDetail_dec_content_left">
+                                    <span>배송방법</span>
+                                </div>
+                                <div className="productDetail_dec_content_right">
+                                    <span>택배</span>
+                                </div>
                             </div>
-                            <div>
-                                <span>배송비</span>
-                                <span>2,500원 (50,000원 이상 구매시 무료)</span>
+                            <div className="productDetail_dec_content">
+                                <div className="productDetail_dec_content_left">
+                                    <span>배송비</span>
+                                </div>
+                                <div className="productDetail_dec_content_right">
+                                    <span>
+                                        2,500원 (50,000원 이상 구매시 무료)
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div>이름</div>
-                        <div>버튼</div>
-                        <div>10000원</div>
+                    <div className="productDetail_cart">
+                        <div className="productDetail_cart_name">
+                            <span>{data?.name}</span>
+                        </div>
+                        <div className="productDetail_cart_calc">
+                            <button className="productdetail_cart_calc_minus">
+                                -
+                            </button>
+                            <div className="productdetail_cart_calc_stock">
+                                <span>1</span>
+                            </div>
+                            <button className="productdetail_cart_calc_plus">
+                                +
+                            </button>
+                        </div>
+                        <div className="productDetail_cart_price">
+                            <span>{data?.price} 원</span>
+                        </div>
                     </div>
-                    <div>
+                    <div className="productDetail_total">
                         <div>TOTAL(QUANTITY)</div>
-                        <div>10000원(1개)</div>
+                        <div className="productDetail_total_price">
+                            {data?.price} 원 (1개)
+                        </div>
                     </div>
-                    <div>
-                        <div>BUY IT NOW</div>
-                        <div>CART</div>
-                        <div>WISH LIST</div>
+                    <div className="productDetail_btn">
+                        <div className="productDetail_btn_buy">BUY IT NOW</div>
+                        <div className="productDetail_btn_cart">CART</div>
+                        <div className="productDetail_btn_wish">WISH LIST</div>
                     </div>
                 </div>
             </div>

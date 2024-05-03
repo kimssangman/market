@@ -20,6 +20,7 @@ function Header() {
      * JWT에서 사용자 정보 가져오기
      -------------------------------*/
     useEffect(() => {
+        const name = localStorage.getItem("name");
         const token = localStorage.getItem("token");
         const decodedToken = DecodingInfo(token);
 
@@ -37,6 +38,7 @@ function Header() {
             setUserName(decodedToken.name); // 디코딩된 토큰에서 사용자 이름 설정
         } else {
             setUserName("");
+            setUserName(name); // 간편 로그인 시 사용
         }
     }, []);
 
