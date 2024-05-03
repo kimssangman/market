@@ -21,7 +21,10 @@ function ProductDetail() {
     const [imageRect, setImageRectRef] = useClientRect();
     const [isMouseOverImage, setIsMouseOverImage] = useState(false); // 이미지 위에 마우스가 있는지 여부를 상태로 관리
 
-    const [scannerPosition, setScannerPosition] = useState({ left: 0, top: 0 });
+    const [scannerPosition, setScannerPosition] = useState({
+        left: 0,
+        top: 0,
+    });
     const [viewPosition, setViewPosition] = useState({ left: 0, top: 0 });
 
     const scannerWidth = 100; // 스캐너의 너비 설정
@@ -33,21 +36,25 @@ function ProductDetail() {
         }
 
         // 마우스 위치 계산 및 스캐너 위치 설정
+        // const scannerPosLeft = e.clientX - scannerWidth / 2 - imageRect.x;
+        // const scannerPosTop = e.clientY - scannerHeight / 2 - imageRect.y;
         const scannerLeft = e.pageX - scannerWidth / 2 - 80;
         const scannerTop = e.pageY - scannerHeight / 2 - 80;
 
         // 스캐너가 이미지 영역을 벗어나지 않도록 조정
         const left = Math.max(
-            0,
+            160,
             Math.min(imageRect.width - scannerWidth, scannerLeft)
         );
         const top = Math.max(
-            0,
+            180,
             Math.min(imageRect.height - scannerHeight, scannerTop)
         );
 
+        // 스캐너 위치 설정
         setScannerPosition({ left, top });
 
+        // 뷰어 위치 설정
         setViewPosition({
             left: scannerPosition.left * -1,
             top: scannerPosition.top * -1,
@@ -57,7 +64,7 @@ function ProductDetail() {
     const onMouseLeave = () => {
         setIsMouseOverImage(false); // 이미지를 벗어나면 마우스 상태 업데이트
         setScannerPosition({ left: 0, top: 0 }); // 스캐너 위치 초기화
-        setViewPosition({ left: 0, top: 0 }); // 스캐너 위치 초기화
+        setViewPosition({ left: 0, top: 0 }); // 뷰어 위치 초기화
     };
     /**------------------------------------------------------------------------------------- */
 
