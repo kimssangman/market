@@ -1,92 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ProductDetail.scss";
 import useData from "../../../../api/product/product_api";
 import { useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
+
+import useImage from "../Scanner&ZoomView/useImage";
 import Scanner from "../Scanner&ZoomView/Scanner";
-import useClientRect from "../Scanner&ZoomView/useClientReact";
 import ZoomView from "../Scanner&ZoomView/ZoomView";
 
 function ProductDetail() {
     let { _id } = useParams();
 
+    // 이미지 상세정보 가져오기
     const { data, loading, error } = useData(
         "/api/v1/product/getProductDetail",
         _id
     );
 
-    /**-------------------------------------------------------------------------------------
-     * 이미지 확대 기능
-     ------------------------------------*/
-    const [imageRect, setImageRectRef] = useClientRect();
-    const [isMouseOverImage, setIsMouseOverImage] = useState(false); // 이미지 위에 마우스가 있는지 여부를 상태로 관리
-
-    const [scannerPosition, setScannerPosition] = useState({
-        left: null,
-        top: null,
-    });
-    const [viewPosition, setViewPosition] = useState({ left: null, top: null });
-
-    const scannerWidth = 100; // 스캐너의 너비 설정
-    const scannerHeight = 100; // 스캐너의 높이 설정
-
-    const onMouseMove = (e) => {
-        if (!isMouseOverImage || !imageRect) {
-            setScannerPosition({ left: null, top: null }); // 마우스가 이미지를 벗어나면 스캐너 위치를 초기화합니다.
-            setViewPosition({ left: null, top: null }); // 뷰어 위치도 초기화합니다.
-            return;
-        }
-
-        // 마우스 위치에 따라 스캐너 및 뷰어 위치를 설정합니다.
-        const scannerPosLeft = e.clientX - scannerWidth / 2 - 80;
-        const scannerPosTop = e.clientY - scannerHeight / 2 - 80;
-
-        // 스캐너 위치 허용 값 계산
-        const allowedPosLeft =
-            scannerPosLeft >= imageRect.x &&
-            scannerPosLeft <=
-                imageRect.x + imageRect.width - scannerWidth - 150;
-        const allowedPosTop =
-            scannerPosTop >= imageRect.y &&
-            scannerPosTop <=
-                imageRect.y + imageRect.height - scannerHeight - 150;
-
-        // 스캐너 이미지 벗어날 때 위치 값 설정
-        if (allowedPosLeft) {
-            scannerPosition.left = Math.max(
-                imageRect.x,
-                Math.min(
-                    imageRect.x + imageRect.width - scannerWidth,
-                    scannerPosLeft
-                )
-            );
-        }
-        if (allowedPosTop) {
-            scannerPosition.top = Math.max(
-                imageRect.y,
-                Math.min(
-                    imageRect.y + imageRect.height - scannerHeight,
-                    scannerPosTop
-                )
-            );
-        }
-
-        // 스캐너 위치 값 설정
-        setScannerPosition({ ...scannerPosition });
-
-        // 뷰어 위치 값 설정
-        setViewPosition({
-            left: -((scannerPosition.left - imageRect.x) * 2),
-            top: -((scannerPosition.top - imageRect.y) * 2),
-        });
-    };
-
-    const onMouseLeave = () => {
-        setIsMouseOverImage(false); // 이미지를 벗어나면 마우스 상태 업데이트
-        setScannerPosition({ left: null, top: null }); // 스캐너 위치 초기화
-        setViewPosition({ left: null, top: null }); // 뷰어 위치 초기화
-    };
-    /**------------------------------------------------------------------------------------- */
+    // 이미지 스캐너, 뷰어 훅
+    const {
+        onMouseMove,
+        onMouseLeave,
+        imageRect,
+        setImageRectRef,
+        isMouseOverImage,
+        setIsMouseOverImage,
+        scannerPosition,
+        viewPosition,
+    } = useImage(); // useImage 훅을 사용하여 이미지 관련 로직을 가져옵니다.
 
     if (loading) {
         return (

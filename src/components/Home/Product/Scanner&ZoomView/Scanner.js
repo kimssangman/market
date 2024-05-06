@@ -1,5 +1,9 @@
 // scanner.js
 
+/**-----------------------------------------
+ * 위치 값을 인자로 전달받아 스캐너 표시
+ -----------------------------------------*/
+
 const scannerStyle = (position) => ({
     position: "absolute",
     top: position.top,
