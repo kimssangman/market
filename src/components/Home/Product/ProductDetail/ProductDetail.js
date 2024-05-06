@@ -22,49 +22,69 @@ function ProductDetail() {
     const [isMouseOverImage, setIsMouseOverImage] = useState(false); // 이미지 위에 마우스가 있는지 여부를 상태로 관리
 
     const [scannerPosition, setScannerPosition] = useState({
-        left: 0,
-        top: 0,
+        left: null,
+        top: null,
     });
-    const [viewPosition, setViewPosition] = useState({ left: 0, top: 0 });
+    const [viewPosition, setViewPosition] = useState({ left: null, top: null });
 
     const scannerWidth = 100; // 스캐너의 너비 설정
     const scannerHeight = 100; // 스캐너의 높이 설정
 
     const onMouseMove = (e) => {
         if (!isMouseOverImage || !imageRect) {
-            return; // 이미지가 로딩되지 않았거나 마우스가 이미지 위에 없는 경우 함수 종료
+            setScannerPosition({ left: null, top: null }); // 마우스가 이미지를 벗어나면 스캐너 위치를 초기화합니다.
+            setViewPosition({ left: null, top: null }); // 뷰어 위치도 초기화합니다.
+            return;
         }
 
-        // 마우스 위치 계산 및 스캐너 위치 설정
-        // const scannerPosLeft = e.clientX - scannerWidth / 2 - imageRect.x;
-        // const scannerPosTop = e.clientY - scannerHeight / 2 - imageRect.y;
-        const scannerLeft = e.pageX - scannerWidth / 2 - 80;
-        const scannerTop = e.pageY - scannerHeight / 2 - 80;
+        // 마우스 위치에 따라 스캐너 및 뷰어 위치를 설정합니다.
+        const scannerPosLeft = e.clientX - scannerWidth / 2 - 80;
+        const scannerPosTop = e.clientY - scannerHeight / 2 - 80;
 
-        // 스캐너가 이미지 영역을 벗어나지 않도록 조정
-        const left = Math.max(
-            160,
-            Math.min(imageRect.width - scannerWidth, scannerLeft)
-        );
-        const top = Math.max(
-            180,
-            Math.min(imageRect.height - scannerHeight, scannerTop)
-        );
+        // 스캐너 위치 허용 값 계산
+        const allowedPosLeft =
+            scannerPosLeft >= imageRect.x &&
+            scannerPosLeft <=
+                imageRect.x + imageRect.width - scannerWidth - 150;
+        const allowedPosTop =
+            scannerPosTop >= imageRect.y &&
+            scannerPosTop <=
+                imageRect.y + imageRect.height - scannerHeight - 150;
 
-        // 스캐너 위치 설정
-        setScannerPosition({ left, top });
+        // 스캐너 이미지 벗어날 때 위치 값 설정
+        if (allowedPosLeft) {
+            scannerPosition.left = Math.max(
+                imageRect.x,
+                Math.min(
+                    imageRect.x + imageRect.width - scannerWidth,
+                    scannerPosLeft
+                )
+            );
+        }
+        if (allowedPosTop) {
+            scannerPosition.top = Math.max(
+                imageRect.y,
+                Math.min(
+                    imageRect.y + imageRect.height - scannerHeight,
+                    scannerPosTop
+                )
+            );
+        }
 
-        // 뷰어 위치 설정
+        // 스캐너 위치 값 설정
+        setScannerPosition({ ...scannerPosition });
+
+        // 뷰어 위치 값 설정
         setViewPosition({
-            left: scannerPosition.left * -1,
-            top: scannerPosition.top * -1,
+            left: -((scannerPosition.left - imageRect.x) * 2),
+            top: -((scannerPosition.top - imageRect.y) * 2),
         });
     };
 
     const onMouseLeave = () => {
         setIsMouseOverImage(false); // 이미지를 벗어나면 마우스 상태 업데이트
-        setScannerPosition({ left: 0, top: 0 }); // 스캐너 위치 초기화
-        setViewPosition({ left: 0, top: 0 }); // 뷰어 위치 초기화
+        setScannerPosition({ left: null, top: null }); // 스캐너 위치 초기화
+        setViewPosition({ left: null, top: null }); // 뷰어 위치 초기화
     };
     /**------------------------------------------------------------------------------------- */
 
@@ -103,7 +123,7 @@ function ProductDetail() {
                         <ZoomView
                             position={viewPosition}
                             img={data?.image}
-                            left={imageRect.width}
+                            left={imageRect.width + 480}
                         />
                     )}
                 </div>
