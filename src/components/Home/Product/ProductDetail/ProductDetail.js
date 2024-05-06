@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ProductDetail.scss";
 import useData from "../../../../api/product/product_api";
 import { useParams } from "react-router-dom";
@@ -7,6 +7,9 @@ import { BeatLoader } from "react-spinners";
 import useImage from "../Scanner&ZoomView/useImage";
 import Scanner from "../Scanner&ZoomView/Scanner";
 import ZoomView from "../Scanner&ZoomView/ZoomView";
+
+import { stockState } from "../../../../store/atoms";
+import { useRecoilState } from "recoil";
 
 function ProductDetail() {
     let { _id } = useParams();
@@ -28,6 +31,29 @@ function ProductDetail() {
         scannerPosition,
         viewPosition,
     } = useImage(); // useImage 훅을 사용하여 이미지 관련 로직을 가져옵니다.
+
+    /**---------------------------------
+     * 장바구니 state
+     ---------------------------------*/
+    const [stock, setStock] = useRecoilState(stockState);
+
+    useEffect(() => {
+        setStock({
+            _id: data?._id,
+            price: data?.price,
+        });
+        console.log(stock);
+    }, [data]);
+
+    function minusStock() {
+        console.log("minusStock");
+    }
+
+    function plusStock() {
+        console.log("plusStock");
+    }
+
+    /**---------------------------------*/
 
     if (loading) {
         return (
@@ -111,13 +137,19 @@ function ProductDetail() {
                             <span>{data?.name}</span>
                         </div>
                         <div className="productDetail_cart_calc">
-                            <button className="productdetail_cart_calc_minus">
+                            <button
+                                className="productdetail_cart_calc_minus"
+                                onClick={minusStock}
+                            >
                                 -
                             </button>
                             <div className="productdetail_cart_calc_stock">
                                 <span>1</span>
                             </div>
-                            <button className="productdetail_cart_calc_plus">
+                            <button
+                                className="productdetail_cart_calc_plus"
+                                onClick={plusStock}
+                            >
                                 +
                             </button>
                         </div>
