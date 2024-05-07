@@ -11,6 +11,9 @@ https://d.cafe24.com/sample?productCode=PTMD778258&frame=P
 https://velog.io/@eenaree/react-image-zoom-in
 ```
 
+![image](https://github.com/kimssangman/market/assets/136281131/2856dd93-6bc0-462f-8fdb-f0a8b72a9d7e)
+
+
 # version
 
 node 20.10.0
