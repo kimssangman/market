@@ -8,13 +8,12 @@ import useImage from "../Scanner&ZoomView/useImage";
 import Scanner from "../Scanner&ZoomView/Scanner";
 import ZoomView from "../Scanner&ZoomView/ZoomView";
 
-import { stockState } from "../../../../store/atoms";
-import { useRecoilState } from "recoil";
+import useCartHook from "./useCartHook/useCartHook";
 
 function ProductDetail() {
     let { _id } = useParams();
 
-    // 이미지 상세정보 가져오기
+    // 이미지 상세정보 가져오기 훅
     const { data, loading, error } = useData(
         "/api/v1/product/getProductDetail",
         _id
@@ -32,28 +31,8 @@ function ProductDetail() {
         viewPosition,
     } = useImage(); // useImage 훅을 사용하여 이미지 관련 로직을 가져옵니다.
 
-    /**---------------------------------
-     * 장바구니 state
-     ---------------------------------*/
-    const [stock, setStock] = useRecoilState(stockState);
-
-    useEffect(() => {
-        setStock({
-            _id: data?._id,
-            price: data?.price,
-        });
-        console.log(stock);
-    }, [data]);
-
-    function minusStock() {
-        console.log("minusStock");
-    }
-
-    function plusStock() {
-        console.log("plusStock");
-    }
-
-    /**---------------------------------*/
+    // 장바구니 훅
+    const { stock, minusStock, plusStock } = useCartHook(data);
 
     if (loading) {
         return (
@@ -144,7 +123,7 @@ function ProductDetail() {
                                 -
                             </button>
                             <div className="productdetail_cart_calc_stock">
-                                <span>1</span>
+                                <span>{stock.count}</span>
                             </div>
                             <button
                                 className="productdetail_cart_calc_plus"
@@ -154,13 +133,13 @@ function ProductDetail() {
                             </button>
                         </div>
                         <div className="productDetail_cart_price">
-                            <span>{data?.price} 원</span>
+                            <span>{stock.price} 원</span>
                         </div>
                     </div>
                     <div className="productDetail_total">
                         <div>TOTAL(QUANTITY)</div>
                         <div className="productDetail_total_price">
-                            {data?.price} 원 (1개)
+                            {stock.price} 원 ({stock.count}개)
                         </div>
                     </div>
                     <div className="productDetail_btn">
