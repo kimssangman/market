@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import "./ProductDetail.scss";
 import useData from "../../../../api/product/product_api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 
-import useImage from "../Scanner&ZoomView/useImage";
-import Scanner from "../Scanner&ZoomView/Scanner";
-import ZoomView from "../Scanner&ZoomView/ZoomView";
+import useImage from "./Scanner&ZoomView/useImage";
+import Scanner from "./Scanner&ZoomView/Scanner";
+import ZoomView from "./Scanner&ZoomView/ZoomView";
 
 import useCartHook from "./useCartHook/useCartHook";
 
@@ -123,7 +123,7 @@ function ProductDetail() {
                                 -
                             </button>
                             <div className="productdetail_cart_calc_stock">
-                                <span>{stock.count}</span>
+                                <span>{stock?.count}</span>
                             </div>
                             <button
                                 className="productdetail_cart_calc_plus"
@@ -133,18 +133,26 @@ function ProductDetail() {
                             </button>
                         </div>
                         <div className="productDetail_cart_price">
-                            <span>{stock.price} 원</span>
+                            <span>{stock?.price} 원</span>
                         </div>
                     </div>
                     <div className="productDetail_total">
                         <div>TOTAL(QUANTITY)</div>
                         <div className="productDetail_total_price">
-                            {stock.price} 원 ({stock.count}개)
+                            {stock?.price} 원 ({stock?.count}개)
                         </div>
                     </div>
                     <div className="productDetail_btn">
                         <div className="productDetail_btn_buy">BUY IT NOW</div>
-                        <div className="productDetail_btn_cart">CART</div>
+
+                        <Link
+                            to={"/cart"}
+                            style={{ textDecoration: "none" }}
+                            className="productDetail_btn_cart"
+                        >
+                            CART
+                        </Link>
+
                         <div className="productDetail_btn_wish">WISH LIST</div>
                     </div>
                 </div>

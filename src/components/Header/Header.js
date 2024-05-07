@@ -24,23 +24,30 @@ function Header() {
         const token = localStorage.getItem("token");
         const decodedToken = DecodingInfo(token);
 
-        /**-------------------------------
-        * JWT에서 토큰 만료됐는지 확인
-        -------------------------------*/
-        const token_isExpired = isExpired(decodedToken?.exp);
-        if (token_isExpired) {
-            alert("로그인 토큰 만료!");
-            localStorage.removeItem("token");
-            window.location.href = "http://localhost:3000"; // 리다이렉트
-        }
+        const fetchUserInfo = async () => {
+            try {
+                /**-------------------------------
+                * JWT에서 토큰 만료됐는지 확인
+                -------------------------------*/
+                const token_isExpired = isExpired(decodedToken?.exp);
+                if (token_isExpired) {
+                    alert("로그인 토큰 만료!");
+                    localStorage.removeItem("token");
+                    window.location.href = "http://localhost:3000"; // 리다이렉트
+                }
 
-        if (decodedToken && decodedToken.name) {
-            setUserName(decodedToken.name); // 디코딩된 토큰에서 사용자 이름 설정
-        } else {
-            setUserName("");
-            setUserName(name); // 간편 로그인 시 사용
-        }
-    }, []);
+                if (decodedToken && decodedToken.name) {
+                    setUserName(decodedToken.name); // 디코딩된 토큰에서 사용자 이름 설정
+                } else {
+                    setUserName(name);
+                }
+            } catch (error) {
+                console.error("토큰 정보를 가져오는 중 오류 발생:", error);
+            }
+        };
+
+        fetchUserInfo();
+    }, [currentUserState]); // currentUserState가 변경될 때마다 실행
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);

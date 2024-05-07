@@ -40,7 +40,7 @@ export default function useSimpleSignIn() {
     --------------------------------*/
     useEffect(() => {
         naverLogin.init();
-        console.log("init!");
+        // console.log("init!");
         getUser();
     }, []);
 
@@ -52,7 +52,7 @@ export default function useSimpleSignIn() {
     const [user, setUser] = useRecoilState(userState);
     const getUser = async () => {
         await naverLogin.getLoginStatus((status) => {
-            console.log(`로그인: ${status}`);
+            // console.log(`로그인: ${status}`);
             if (status) {
                 // setUser({ ...naverLogin.user });
 

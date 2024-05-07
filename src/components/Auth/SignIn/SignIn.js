@@ -1,14 +1,16 @@
+// SignIn.js
+
 import React, { useEffect, useState } from "react";
 import "./SignIn.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signIn } from "../../../api/auth/signIn_api";
 import useSimpleSignIn from "../../../api/auth/simple_signIn_api";
 import { userState } from "../../../store/atoms";
 import { useRecoilState } from "recoil";
 
 function SignIn() {
-    const navigate = useNavigate();
     const [user, setUser] = useRecoilState(userState);
+    const navigate = useNavigate();
 
     // 간편 로그인 훅 분리
     useSimpleSignIn();
@@ -29,11 +31,10 @@ function SignIn() {
     };
 
     // 회원가입 버튼 클릭 시 실행되는 함수
-    const handleSignUp = async (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
 
         try {
-            // axios를 사용하여 서버로 데이터를 보냅니다.
             const response = await signIn(form).then((res) => {
                 /**-------------------------------
                  * JWT에서 사용자 정보 전역변수에 저장
@@ -41,10 +42,8 @@ function SignIn() {
                  * 수정해야 함
                  -------------------------------*/
                 setUser(res.payload.name);
-                // navigate("/");
-                window.location.href = "http://localhost:3000";
+                window.location.href = "http://localhost:3000"; // 페이지 새로고침
             });
-            // localStorage.setItem("name", response.data.name);
         } catch (error) {
             alert("아이디 또는 비밀번호 오류");
             console.error("로그인 실패:", error);
@@ -89,7 +88,7 @@ function SignIn() {
                 {/* 아이디 로그인 */}
                 <div className="login_id">
                     <div className="login_id_title">아이디 로그인</div>
-                    <form onSubmit={handleSignUp}>
+                    <form>
                         <div className="id_container">
                             <input
                                 id="id"
@@ -119,7 +118,7 @@ function SignIn() {
                                     <div>아이디 저장</div>
                                 </div>
                                 <div className="security_sec">
-                                    <input type="checkbox" checked={true} />
+                                    <input type="checkbox" />
                                     <div>보안 접속</div>
                                 </div>
                             </div>
@@ -128,7 +127,9 @@ function SignIn() {
                                 <div>비밀번호 찾기</div>
                             </div>
                         </div>
-                        <button type="submit">로그인</button>
+                        <button type="submit" onClick={handleSignIn}>
+                            로그인
+                        </button>
                     </form>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+// App.js
+
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -14,6 +16,7 @@ import IsTokenRoute from "./pages/IsTokenRoute"; // 토큰이 존재하면 라�
 import PrivateRoute from "./pages/PrivateRoute"; // 토큰이 존재하지 않으면 라우팅
 import Footer from "./components/Footer/Footer";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
+import CartPage from "./pages/CartPage/CartPage";
 
 function App() {
     const token = getToken();
@@ -50,6 +53,16 @@ function App() {
                         path="/product/:_id"
                         element={
                             <ProductDetailPage className="productDetailPage" />
+                        }
+                    />
+
+                    <Route
+                        path="/cart"
+                        element={
+                            <PrivateRoute
+                                component={<CartPage />}
+                                authenticated={token}
+                            />
                         }
                     />
 

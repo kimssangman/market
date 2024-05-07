@@ -1,3 +1,5 @@
+// jwt.api.js
+
 // 한글 깨짐 문제 발생하여 이렇게 코드 짰음
 
 export function DecodingInfo(jwtToken) {
