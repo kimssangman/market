@@ -11,6 +11,7 @@ import { useRecoilState } from "recoil";
 function SignIn() {
     const [user, setUser] = useRecoilState(userState);
     const navigate = useNavigate();
+    const location = useLocation();
 
     // 간편 로그인 훅 분리
     useSimpleSignIn();
@@ -42,7 +43,12 @@ function SignIn() {
                  * 수정해야 함
                  -------------------------------*/
                 setUser(res.payload.name);
-                window.location.href = "http://localhost:3000"; // 페이지 새로고침
+
+                /**-------------------------------
+                 * state로 받은 이전 path를 후처리 하여 리디렉트 시킨다.
+                 -------------------------------*/
+                const from = location.state?.location.pathname || "/";
+                window.location.href = `http://localhost:3000${from}`;
             });
         } catch (error) {
             alert("아이디 또는 비밀번호 오류");

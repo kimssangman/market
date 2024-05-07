@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./ProductDetail.scss";
 import useData from "../../../../api/product/product_api";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 
 import useImage from "./Scanner&ZoomView/useImage";
@@ -12,6 +12,7 @@ import useCartHook from "./useCartHook/useCartHook";
 
 function ProductDetail() {
     let { _id } = useParams();
+    const navigate = useNavigate();
 
     // 이미지 상세정보 가져오기 훅
     const { data, loading, error } = useData(
@@ -144,15 +145,14 @@ function ProductDetail() {
                     </div>
                     <div className="productDetail_btn">
                         <div className="productDetail_btn_buy">BUY IT NOW</div>
-
-                        <Link
-                            to={"/cart"}
-                            style={{ textDecoration: "none" }}
+                        <div
                             className="productDetail_btn_cart"
+                            onClick={() => {
+                                navigate("/cart");
+                            }}
                         >
                             CART
-                        </Link>
-
+                        </div>
                         <div className="productDetail_btn_wish">WISH LIST</div>
                     </div>
                 </div>
