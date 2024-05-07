@@ -46,6 +46,8 @@ function SignIn() {
 
                 /**-------------------------------
                  * state로 받은 이전 path를 후처리 하여 리디렉트 시킨다.
+                 * 
+                 * 어째서인지 navigate 함수가 먹히지 않아서 강제이동시켰음.
                  -------------------------------*/
                 const from = location.state?.location.pathname || "/";
                 window.location.href = `http://localhost:3000${from}`;
