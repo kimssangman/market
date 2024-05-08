@@ -9,6 +9,7 @@ import Scanner from "./Scanner&ZoomView/Scanner";
 import ZoomView from "./Scanner&ZoomView/ZoomView";
 
 import useCartHook from "./useCartHook/useCartHook";
+import { addCart } from "../../../../api/cart/cart_index";
 
 function ProductDetail() {
     let { _id } = useParams();
@@ -34,6 +35,13 @@ function ProductDetail() {
 
     // 장바구니 훅
     const { stock, minusStock, plusStock } = useCartHook(data);
+
+    // 장바구니 담을 것인지 여부
+    async function getCart(item) {
+        await addCart("/api/v1/cart/addCart", item).then((res) => {
+            // navigate("/cart");
+        });
+    }
 
     if (loading) {
         return (
@@ -147,9 +155,7 @@ function ProductDetail() {
                         <div className="productDetail_btn_buy">BUY IT NOW</div>
                         <div
                             className="productDetail_btn_cart"
-                            onClick={() => {
-                                navigate("/cart");
-                            }}
+                            onClick={() => getCart(stock)}
                         >
                             CART
                         </div>
