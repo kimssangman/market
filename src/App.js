@@ -17,6 +17,7 @@ import PrivateRoute from "./pages/PrivateRoute"; // 토큰이 존재하지 않�
 import Footer from "./components/Footer/Footer";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 import CartPage from "./pages/CartPage/CartPage";
+import PositiveDialog from "./components/Modal/PositiveDialog/PositiveDialog";
 
 function App() {
     const token = getToken();
@@ -68,6 +69,9 @@ function App() {
 
                     <Route path="*" element={<NotFound />} replace={true} />
                 </Routes>
+
+                {/* 모달 */}
+                <PositiveDialog />
                 <Footer />
             </RecoilRoot>
         </div>

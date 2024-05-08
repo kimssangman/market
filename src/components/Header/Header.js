@@ -5,24 +5,27 @@ import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../store/atoms/index";
 import { DecodingInfo, isExpired } from "../../api/auth/jwt_api";
+import { useQuery } from "react-query";
+import { getCarts } from "../../api/cart/cart_index.js";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
     const currentUserState = useRecoilValue(userState);
     const [userName, setUserName] = useState(null); // 사용자 이름 상태 추가
     const dropdownRef = useRef(null);
+    const token = localStorage.getItem("token");
+    const decodedToken = DecodingInfo(token);
+    const navigate = useNavigate();
 
     /**-------------------------------
      * JWT에서 사용자 정보 가져오기
      -------------------------------*/
     useEffect(() => {
         const name = localStorage.getItem("name");
-        const token = localStorage.getItem("token");
-        const decodedToken = DecodingInfo(token);
 
         const fetchUserInfo = async () => {
             try {
@@ -88,6 +91,36 @@ function Header() {
         localStorage.removeItem("token");
     };
 
+    /**--------------------------------
+     * 장바구니 갯수
+     --------------------------------*/
+    const { data, isLoading, isError } = useQuery(
+        "carts",
+        () => {
+            if (decodedToken) {
+                return getCarts("/api/v1/cart/getCartLength", decodedToken._id);
+            } else {
+                return Promise.resolve(null); // 사용자 로그인 토큰이 없을 때 null 반환
+            }
+        },
+        {
+            refetchInterval: 1000, // 1초마다 갱신
+        }
+    );
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error fetching data</div>;
+    }
+
+    function goCart() {
+        alert("로그인이 필요한 서비스입니다.");
+        navigate("/cart");
+    }
+
     return (
         <div className="header" ref={dropdownRef}>
             <div className="header_wrap">
@@ -147,8 +180,11 @@ function Header() {
                 </div>
 
                 {/* 장바구니 */}
-                <div className="cart">
+                <div className="cart" onClick={() => goCart()}>
                     <CiShoppingCart className="cart_img" />
+                    {data?.count == null || 0 ? null : (
+                        <div className="cart_count">{data?.count}</div>
+                    )}
                 </div>
                 <div className="hamburger_menu" onClick={toggleMenu}>
                     <RxHamburgerMenu className="hamburger_icon" />

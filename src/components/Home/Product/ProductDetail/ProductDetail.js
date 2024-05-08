@@ -1,3 +1,5 @@
+// ProductDetail.js
+
 import React, { useEffect } from "react";
 import "./ProductDetail.scss";
 import useData from "../../../../api/product/product_api";
@@ -11,9 +13,16 @@ import ZoomView from "./Scanner&ZoomView/ZoomView";
 import useCartHook from "./useCartHook/useCartHook";
 import { addCart } from "../../../../api/cart/cart_index";
 
+import { useSetRecoilState } from "recoil";
+import { dialogState } from "../../../../store/atoms";
+import { DecodingInfo } from "../../../../api/auth/jwt_api";
+
 function ProductDetail() {
     let { _id } = useParams();
     const navigate = useNavigate();
+    const setDialog = useSetRecoilState(dialogState);
+    const token = localStorage.getItem("token");
+    const decodedToken = DecodingInfo(token);
 
     // 이미지 상세정보 가져오기 훅
     const { data, loading, error } = useData(
@@ -36,11 +45,33 @@ function ProductDetail() {
     // 장바구니 훅
     const { stock, minusStock, plusStock } = useCartHook(data);
 
-    // 장바구니 담을 것인지 여부
+    /**---------------------------
+     * 장바구니 담을 것인지 여부
+     * 모달창
+     ---------------------------*/
     async function getCart(item) {
-        await addCart("/api/v1/cart/addCart", item).then((res) => {
-            // navigate("/cart");
-        });
+        if (decodedToken) {
+            item = {
+                _id: item._id, // 제품 아이디
+                userId: decodedToken._id, // 사용자 아이디
+                name: item.name, // 제품 이름
+                price: item.price, // 제품 가격
+                count: item.count, // 제품 수량
+            };
+
+            setDialog({
+                open: true,
+                message: "장바구니에 담으시겠습니까?",
+                callback: async (confirmed) => {
+                    if (confirmed) {
+                        addCart("/api/v1/cart/addCart", item).then((res) => {});
+                    }
+                },
+            });
+        } else {
+            alert("로그인이 필요한 서비스입니다.");
+            navigate("/cart");
+        }
     }
 
     if (loading) {

@@ -90,11 +90,28 @@
         }
 
         .cart {
+            display: flex;
+            cursor: pointer;
+
             .cart_img {
                 display: flex;
                 align-items: center;
                 color: rgb(34 115 81);
                 font-size: 2rem;
+            }
+
+            .cart_count {
+                position: relative;
+                right: 35px;
+                top: 15px;
+                border: 1px solid;
+                padding: 5px;
+                border-radius: 50%;
+                width: 10px;
+                height: 10px;
+                line-height: 6px;
+                background-color: #20c997;
+                color: white;
             }
         }
     }

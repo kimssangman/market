@@ -9,3 +9,12 @@ export async function addCart(url, item) {
         console.log(error);
     }
 }
+
+export async function getCarts(url, _id) {
+    try {
+        const response = await axios.get(url, { params: { _id } });
+        return response.data;
+    } catch (error) {
+        throw new Error("Failed to fetch carts data");
+    }
+}
