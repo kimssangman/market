@@ -44,15 +44,9 @@ function SignIn() {
                  -------------------------------*/
                 setUser(res.payload.name);
 
-                /**-------------------------------
-                 * state로 받은 이전 path를 후처리 하여 리디렉트 시킨다.
-                 * 
-                 * 어째서인지 navigate 함수가 먹히지 않아서 강제이동시켰음.
-                 -------------------------------*/
-                // const from = location.state?.location.pathname || "/";
-
                 // react-router V6 이전 페이지 URL 이동하기
                 navigate(-1);
+                window.location.reload();
             });
         } catch (error) {
             alert("아이디 또는 비밀번호 오류");

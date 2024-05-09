@@ -98,7 +98,7 @@ function Header() {
         "carts",
         () => {
             if (decodedToken) {
-                return getCarts("/api/v1/cart/getCartLength", decodedToken._id);
+                return getCarts("/api/v1/cart/getCarts", decodedToken._id);
             } else {
                 return Promise.resolve(null); // 사용자 로그인 토큰이 없을 때 null 반환
             }
@@ -181,8 +181,8 @@ function Header() {
                 {/* 장바구니 */}
                 <div className="cart" onClick={() => goCart()}>
                     <CiShoppingCart className="cart_img" />
-                    {data?.count == null || 0 ? null : (
-                        <div className="cart_count">{data?.count}</div>
+                    {data?.carts == null || 0 ? null : (
+                        <div className="cart_count">{data?.carts.length}</div>
                     )}
                 </div>
                 <div className="hamburger_menu" onClick={toggleMenu}>
