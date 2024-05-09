@@ -31,7 +31,7 @@ function SignIn() {
         });
     };
 
-    // 회원가입 버튼 클릭 시 실행되는 함수
+    // 로그인 버튼 클릭 시 실행되는 함수
     const handleSignIn = async (e) => {
         e.preventDefault();
 
@@ -49,8 +49,10 @@ function SignIn() {
                  * 
                  * 어째서인지 navigate 함수가 먹히지 않아서 강제이동시켰음.
                  -------------------------------*/
-                const from = location.state?.location.pathname || "/";
-                window.location.href = `http://localhost:3000${from}`;
+                // const from = location.state?.location.pathname || "/";
+
+                // react-router V6 이전 페이지 URL 이동하기
+                navigate(-1);
             });
         } catch (error) {
             alert("아이디 또는 비밀번호 오류");

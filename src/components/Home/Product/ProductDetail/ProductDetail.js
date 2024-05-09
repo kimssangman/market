@@ -1,9 +1,9 @@
 // ProductDetail.js
 
-import React, { useEffect } from "react";
+import React from "react";
 import "./ProductDetail.scss";
 import useData from "../../../../api/product/product_api";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
 
 import useImage from "./Scanner&ZoomView/useImage";
@@ -69,8 +69,7 @@ function ProductDetail() {
                 },
             });
         } else {
-            alert("로그인이 필요한 서비스입니다.");
-            navigate(`/`);
+            navigate("/signIn");
         }
     }
 
