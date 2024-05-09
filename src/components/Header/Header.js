@@ -11,6 +11,9 @@ import { userState } from "../../store/atoms/index";
 import { DecodingInfo, isExpired } from "../../api/auth/jwt_api";
 import { useQuery } from "react-query";
 import { getCarts } from "../../api/cart/cart_index.js";
+import eventBus from "../../eventBus/eventBus.js";
+import useFetch from "../../hooks/useFetch.js";
+import axios from "axios";
 
 function Header() {
     const [showMenu, setShowMenu] = useState(false);
@@ -23,6 +26,7 @@ function Header() {
 
     /**-------------------------------
      * JWT에서 사용자 정보 가져오기
+     * 토큰 만료 확인
      -------------------------------*/
     useEffect(() => {
         const name = localStorage.getItem("name");
@@ -92,27 +96,41 @@ function Header() {
     };
 
     /**--------------------------------
-     * 장바구니 갯수
+     * 장바구니 갯수 업데이트
+     * 
+     * Fetch 커스텀 훅을 사용해서 데이터를 가져오고 장바구니의 갯수를 바로 업데이트 하고 싶다.
+     * 
+     * 1. addCart로 성공적으로 담았을 때 eventBus로 emit해줬음.
+     * 2. Header.js에서 eventBus on으로 이벤트를 성공적으로 받았음.
+     * 3. 다시 Fetch를 이용해서 장바구니 갯수를 업데이트 해야함.
+     * 4. 하지만 그게 안됐음. 
+     * 5. useFetch 커스텀 훅에서 return 값에 fetchData(axios.get하는 함수) 함수 자체를 같이 보냄
+     * 6. 굳이 data를 새로 업데이트 시키지 않아도 커스텀훅의 api를 다시 쏘게 됨.
      --------------------------------*/
-    const { data, isLoading, isError } = useQuery(
-        "carts",
-        () => {
-            if (decodedToken) {
-                return getCarts("/api/v1/cart/getCarts", decodedToken._id);
-            } else {
-                return Promise.resolve(null); // 사용자 로그인 토큰이 없을 때 null 반환
-            }
-        },
-        {
-            refetchInterval: 1000, // 1초마다 갱신
-        }
+    const { data, loading, error, fetchData } = useFetch(
+        "/api/v1/cart/getCarts",
+        token._id
     );
 
-    if (isLoading) {
+    useEffect(() => {
+        const handleMyEvent = async (message) => {
+            // 보내준 값(메시지) 출력하기
+            console.log(`Received: ${message}`);
+            fetchData(); // 데이터 업데이트
+        };
+        // 이벤트 수신하기
+        eventBus.on("addCart", handleMyEvent);
+        return () => {
+            // 컴포넌트가 사라질 때에는 이벤트 수신 종료
+            eventBus.off("addCart", handleMyEvent);
+        };
+    }, []);
+
+    if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (isError) {
+    if (error) {
         return <div>Error fetching data</div>;
     }
 

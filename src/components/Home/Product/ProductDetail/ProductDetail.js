@@ -16,6 +16,7 @@ import { addCart } from "../../../../api/cart/cart_index";
 import { useSetRecoilState } from "recoil";
 import { dialogState } from "../../../../store/atoms";
 import { DecodingInfo } from "../../../../api/auth/jwt_api";
+import eventBus from "../../../../eventBus/eventBus";
 
 function ProductDetail() {
     let { _id } = useParams();
@@ -64,7 +65,9 @@ function ProductDetail() {
                 message: "장바구니에 담으시겠습니까?",
                 callback: async (confirmed) => {
                     if (confirmed) {
-                        addCart("/api/v1/cart/addCart", item).then((res) => {});
+                        addCart("/api/v1/cart/addCart", item).then((res) => {
+                            eventBus.emit("addCart", "");
+                        });
                     }
                 },
             });

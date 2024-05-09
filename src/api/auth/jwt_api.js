@@ -18,8 +18,17 @@ export function DecodingInfo(jwtToken) {
     }
 }
 
+// 토큰 불러오기
 export function getToken() {
     return localStorage.getItem("token");
+}
+
+// 토큰 정보 가져오기
+export function decodedToken() {
+    const token = localStorage.getItem("token");
+    const decodedToken = DecodingInfo(token);
+
+    return decodedToken;
 }
 
 // 토큰 만료 감지
