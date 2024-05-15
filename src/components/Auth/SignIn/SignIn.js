@@ -36,18 +36,26 @@ function SignIn() {
         e.preventDefault();
 
         try {
-            const response = await signIn(form).then((res) => {
-                /**-------------------------------
-                 * JWT에서 사용자 정보 전역변수에 저장
-                 * 라우팅을 저렇게해서 전역변수 작동 안 함
-                 * 수정해야 함
-                 -------------------------------*/
-                setUser(res.payload.name);
+            const response = await signIn(form);
+            setUser(response.payload.name);
 
-                // react-router V6 이전 페이지 URL 이동하기
-                navigate(-1);
-                window.location.reload();
-            });
+            /**---------------------------------------
+             * 로그인 시 이전페이지로 이동하는 법
+             * 
+             * 1. 유저 권한이 필요없는 페이지에서 로그인 완료 시 다시 이전 페이지로 이동하는 법
+             * 1-1) Header.js에서 useLocation()을 사용하여 현재 페이지를 저장한다.
+             * 1-2) Header.js에서 로그인 버튼을 눌렀을 때 useNavigate()로 state를 전달한다.
+             * 1-3) SignIn.js에서 로그인 버튼을 눌렀을 때 useLocation()의 state 값을 전달 받아 해당 페이지로 이동한다.
+             * 
+             * 2. 유저 권한이 필요한 페이지에서 로그인 완료 시 다시 이전 페이지로 이동하는 법
+             * 2-1) PrivateRoute.js에서 useLocation()을 사용하여 현재 페이지를 바로 SignIn.js에 넘겨준다.
+             * 2-2) SignIn.js에서 로그인 버튼을 눌렀을 때 useLocation()의 state 값을 전달 받아 해당 페이지로 이동한다.
+             * 
+             * isTokenRoute.js는 토큰이 존재할 때 갈 필요없는 페이지 ex) 로그인, 회원가입 페이지 처리할 때만 사용한다.
+             ---------------------------------------*/
+            const from = location.state?.from?.pathname || "/";
+            navigate(from, { replace: true });
+            window.location.reload();
         } catch (error) {
             alert("아이디 또는 비밀번호 오류");
             console.error("로그인 실패:", error);

@@ -72,7 +72,7 @@ function ProductDetail() {
                 },
             });
         } else {
-            navigate("/signIn");
+            navigate("/cart");
         }
     }
 

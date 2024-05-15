@@ -5,7 +5,7 @@ import { CiSearch } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../store/atoms/index";
 import { DecodingInfo, isExpired } from "../../api/auth/jwt_api";
@@ -20,9 +20,12 @@ function Header() {
     const currentUserState = useRecoilValue(userState);
     const [userName, setUserName] = useState(null); // 사용자 이름 상태 추가
     const dropdownRef = useRef(null);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const token = localStorage.getItem("token");
     const decodedToken = DecodingInfo(token);
-    const navigate = useNavigate();
 
     /**-------------------------------
      * JWT에서 사용자 정보 가져오기
@@ -109,7 +112,7 @@ function Header() {
      --------------------------------*/
     const { data, loading, error, fetchData } = useFetch(
         "/api/v1/cart/getCarts",
-        token._id
+        token ? decodedToken._id : null // 토큰이 없을 경우에는 null을 전달
     );
 
     useEffect(() => {
@@ -136,6 +139,12 @@ function Header() {
 
     function goCart() {
         navigate("/cart");
+    }
+
+    function goSignIn() {
+        const previousPath = location.pathname;
+        // 이전 경로를 state에 담아서 로그인 페이지로 이동
+        navigate("/signIn", { state: { from: { pathname: previousPath } } });
     }
 
     return (
@@ -170,12 +179,17 @@ function Header() {
                             {userName} 님
                         </div>
                     ) : (
-                        <Link to="/signIn" style={{ textDecoration: "none" }}>
-                            <div className="auth">
-                                <CiUser className="auth_img" />
-                                <div className="auth_des">로그인</div>
-                            </div>
-                        </Link>
+                        // <Link to="/signIn" style={{ textDecoration: "none" }}>
+                        <div
+                            className="auth"
+                            onClick={() => {
+                                goSignIn();
+                            }}
+                        >
+                            <CiUser className="auth_img" />
+                            <div className="auth_des">로그인</div>
+                        </div>
+                        // </Link>
                     )}
                     {showMenu && (
                         <div className="dropdown_menu">
@@ -199,7 +213,7 @@ function Header() {
                 {/* 장바구니 */}
                 <div className="cart" onClick={() => goCart()}>
                     <CiShoppingCart className="cart_img" />
-                    {data?.carts == null || 0 ? null : (
+                    {data?.carts.length == 0 || 0 ? null : (
                         <div className="cart_count">{data?.carts.length}</div>
                     )}
                 </div>

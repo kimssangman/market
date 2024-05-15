@@ -16,7 +16,6 @@ function Cart() {
         token._id
     );
 
-    console.log(data);
     if (loading) {
         return (
             <div className="spinner_wrap">

@@ -15,6 +15,7 @@ function useFetch(url, _id) {
     const fetchData = async () => {
         try {
             const response = await axios.get(url, { params: { _id } });
+
             setData(response.data);
         } catch (error) {
             setError(error);
