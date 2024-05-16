@@ -2,26 +2,18 @@ import React, { useState } from "react";
 import "./SignUp.scss";
 import { signUp } from "../../../api/auth/signUp_api";
 import { Link, useNavigate } from "react-router-dom";
+import useInput from "../../../hooks/useInput";
 
 function SignUp() {
     const navigate = useNavigate();
 
-    const [form, setForm] = useState({
+    // Input 훅 분리
+    const { form, handleChange } = useInput({
         id: "",
         password: "",
         pw_confirm: "",
         name: "",
     });
-
-    // 입력값이 변경될 때 실행되는 함수
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        // 기존의 form 상태를 복사한 후 해당 필드만 업데이트
-        setForm({
-            ...form,
-            [name]: value,
-        });
-    };
 
     // 회원가입 버튼 클릭 시 실행되는 함수
     const handleSignUp = async (e) => {

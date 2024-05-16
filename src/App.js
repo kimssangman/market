@@ -15,6 +15,7 @@ import Footer from "./components/Footer/Footer";
 import ProductDetailPage from "./pages/ProductDetailPage/ProductDetailPage";
 import CartPage from "./pages/CartPage/CartPage";
 import PositiveDialog from "./components/Modal/PositiveDialog/PositiveDialog";
+import ChatBotIcon from "./components/ChatModal/ChatBotIcon/ChatBotIcon";
 
 function App() {
     const token = getToken();
@@ -66,6 +67,9 @@ function App() {
 
                     <Route path="*" element={<NotFound />} replace={true} />
                 </Routes>
+
+                {/* 챗 모달 */}
+                <ChatBotIcon />
 
                 {/* 모달 */}
                 <PositiveDialog />

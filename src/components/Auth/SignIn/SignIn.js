@@ -7,6 +7,7 @@ import { signIn } from "../../../api/auth/signIn_api";
 import useSimpleSignIn from "../../../api/auth/simple_signIn_api";
 import { userState } from "../../../store/atoms";
 import { useRecoilState } from "recoil";
+import useInput from "../../../hooks/useInput";
 
 function SignIn() {
     const [user, setUser] = useRecoilState(userState);
@@ -16,20 +17,11 @@ function SignIn() {
     // 간편 로그인 훅 분리
     useSimpleSignIn();
 
-    const [form, setForm] = useState({
+    // Input 훅 분리
+    const { form, handleChange } = useInput({
         id: "",
         password: "",
     });
-
-    // 입력값이 변경될 때 실행되는 함수
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        // 기존의 form 상태를 복사한 후 해당 필드만 업데이트
-        setForm({
-            ...form,
-            [name]: value,
-        });
-    };
 
     // 로그인 버튼 클릭 시 실행되는 함수
     const handleSignIn = async (e) => {
